@@ -12,10 +12,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
 
@@ -24,12 +24,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run tests
-      run: |
-        pytest tests/ -v
-
-    - name: Train model
+    - name: Prepare data and model
       run: |
         python src/data/load_data.py
         python src/features/build_features.py
         python src/models/train.py
+
+    - name: Run tests
+      run: |
+        pytest tests/ -v
